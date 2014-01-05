@@ -33,14 +33,14 @@ FlashAir Photos Sync
 
 - 無線アクセスポイントの切替の自動化
     - FlashAir の「ワイヤレスデータ転送」機能はケーブル接続に比べてだいぶ便利ですが、無線アクセスポイントの切り替えも意外と一手間だったりします。特に以下の 2 点が面倒でした。これらは上記スクリプトで自動的に対処してくれます。
-        1.  カメラデバイスを起動してから、FlashAir のアクセスポイントにいつアクセスできるのか正確にわからないので、たいていは何度かアクセス試行する必要がある
+        1.  FlashAir 搭載デバイスを起動してから、FlashAir のアクセスポイントにいつアクセスできるのか正確にわからないので、たいていは何度かアクセス試行する必要がある
         2.  ファイルサーバにつないだ状態でうっかりアクセスポイントを切り替えるとファイル操作がハングする場合があるため、常に切替時に留意する必要がある
 
 - FlashAir からの写真の一括ダウンロード
     - FlashAir の提供するユーザインターフェースだと、個別的に写真データをダウンロードするには十分ですが、何十〜数百枚単位の写真を手元に一括ダウンロードするのは結構手間です。上記スクリプトは写真を一括でダウンロードしてきます。 (SD カード上の写真の扱いは人によりけりと思いますが、私は SD カード上のデータは一時置き場と考えてます)
 
 - 日付ディレクトリに写真データを分ける作業の自動化
-    - 写真を手っ取り早くディレクトリ分けする方法の一つが撮影日による分類です。写真データは大抵 JPEG 形式で、その中には撮影日の情報も含まれています。上記スクリプトは [ExisTool](http://www.sno.phy.queensu.ca/~phil/exiftool/) を利用することでその撮影日情報を取得し、自動的に以下のような階層的な日付ディレクトリに写真をアーカイブします。
+    - 写真を手っ取り早くディレクトリ分けする方法の一つが撮影日による分類です。写真データは大抵 JPEG 形式で、その中には撮影日の情報も含まれています。上記スクリプトは [ExifTool](http://www.sno.phy.queensu.ca/~phil/exiftool/) を利用することでその撮影日情報を取得し、自動的に以下のような階層的な日付ディレクトリに写真をアーカイブします。
 
             ~/Pictures/FlashAir/
             |
@@ -56,14 +56,14 @@ FlashAir Photos Sync
 ----------
 
 - FlashAir
-    - *TOSHIBA SD-WB008G*
+    - TOSHIBA SD-WB008G
 
 - PC
-    - ハードウェア: *MacBook Air*
-    - OS: *Mac OS X 10.8.5 (Mountain Lion)*
-    - シェル: *GNU bash, version 3.2.48(1)-release (x86_64-apple-darwin12)*
+    - ハードウェア: MacBook Air
+    - OS: Mac OS X 10.8.5 (Mountain Lion)
+    - シェル: GNU bash, version 3.2.48(1)-release (x86_64-apple-darwin12)
     - 外部ツール
-        - *[ExifTool version 9.45](http://www.sno.phy.queensu.ca/~phil/exiftool/)*
+        - [ExifTool version 9.45](http://www.sno.phy.queensu.ca/~phil/exiftool/)
 
 - 写真・動画データ形式
     - JPEG
@@ -107,7 +107,6 @@ FlashAir Photos Sync
                    exiftool [OPTIONS] -TAG[+-<]=[VALUE]... FILE...
                    exiftool [OPTIONS] -tagsFromFile SRCFILE [-SRCTAG[>DSTTAG]...] FILE...
                    exiftool [ -ver | -list[w|f|r|wf|g[NUM]|d|x] ]
-
 5. flashair-photos-sync.sh 内の以下の変数をテキストエディタで編集
 
     - 作業ディレクトリ
@@ -115,48 +114,40 @@ FlashAir Photos Sync
       このディレクトリ以下に一時写真ファイル置き場、アーカイブ済みファイルのキャッシュ、ログが設置されます。
 
             BASE_DIR="${HOME}/Pictures/FlashAir/working"
-
     - 無線デバイス名
 
       FlashAir に接続する無線デバイス名 (en0 や en1 など) を設定します。複数のネットワークデバイスが接続されている場合は `/sbin/ifconfig` コマンドで確認して下さい。
 
             NW_DEV="en0"
-
     - FlashAir Wifi SSID 名
 
       FlashAir に設定している、Wifi SSID 名を設定して下さい。
 
             FLAIR_SSID="flashair"
-
     - FlashAir のホスト名、アクセス先 URL、写真データファイルの一覧取得時のキーワード
 
       一度 FlashAir に PC で接続し、その URL を確認して以下の変数に設定して下さい。
 
             FLAIR_HOST="flashair"
             FLAIR_URL="http://${FLAIR_HOST}/DCIM/101OLYMP"
-
       また写真一覧が表示されたページの HTML ソースを確認し、各写真のファイル名を検査する場合の文字列を以下の変数に設定して下さい。(そのまま grep に渡す形で利用されます)
 
             PHOTO_KEYWORD="^wlansd"
-
     - 撮影日不明のファイルの格納先ディレクトリ
     
       ExifTool で撮影日情報を取得できないファイルの格納先ディレクトリを設定して下さい。
 
             UNCLASS_DIR="someday"
-
     - アーカイブ先ディレクトリ (ローカル)
     
       PC 上に写真データをアーカイブする場合、下記の変数にそのアーカイブディレクトリを設定して下さい。ファイルサーバにアーカイブする場合は後述の「アーカイブ先ディレクトリ (リモート)」に値を設定し、こちらの変数には値を設定しないで下さい。なお、ローカルとリモートの両方にアーカイブを行うことも可能です。
 
             ARCH_LOCAL_PATH="${HOME}/Pictures/FlashAir"
-
     - アーカイブ先ディレクトリ (リモート)
 
       ファイルサーバ上に写真データをアーカイブする場合、下記の変数にそのアーカイブディレクトリを設定して下さい。
 
             ARCH_REMOTE_PATH="/Volumes/share/Photos/FlashAir"
-
       こちらを利用する場合、下記のファイルサーバに関する設定も行って下さい。
 
             NAS_PROT="smb"    # "smb" or "afp"
@@ -164,11 +155,9 @@ FlashAir Photos Sync
             NAS_SERVER="192.168.1.10"
             NAS_MOUNT_PATH="share"
             NAS_LOCAL_PATH="/Volumes/share"
-
 6. ディレクトリの作成
 
     - *BASE_DIR*、*ARCH_LOCAL_PATH*、*ARCH_REMOTE_PATH* に指定したディレクトリを事前に作成しておきます。
-
 7. スクリプト実行前に一度、1) FlashAir の Wifi への接続、2) (アーカイブ先がファイルサーバの場合は) ファイルサーバへの接続、を済ませておいて下さい。このスクリプトはキーチェーンからパスワードを取得する機構になっているため、事前の接続 (= キーチェーンへのパスワード登録) が必要なためです。
 
 
@@ -239,12 +228,12 @@ FlashAir Photos Sync
 
 完了すると、1) アーカイブ済みファイルのキャッシュの更新 (アーカイブをキャンセルしなかった場合)、2) ログの圧縮と表示、を行い、スクリプトは正常終了します。
 
-        Update Archived Photos List Cache File "/Users/user/Pictures/FlashAir/working/flashair-photos-sync-archived.cache" ...  done.
+    Update Archived Photos List Cache File "/Users/user/Pictures/FlashAir/working/flashair-photos-sync-archived.cache" ...  done.
 
-        [Logs]
-          /Users/user/Pictures/FlashAir/working/logs/flashair-photos-sync-summary.log.20140103-105631.gz
+    [Logs]
+      /Users/user/Pictures/FlashAir/working/logs/flashair-photos-sync-summary.log.20140103-105631.gz
 
-        flashair-photos-sync is done.
+    flashair-photos-sync is done.
 
 オプション
 ----------
@@ -267,15 +256,15 @@ FlashAir Photos Sync
 
 FlashAir からの画像ダウンロードなど、スクリプトによる処理を途中で強制終了したい場合は *Ctrl-C* を入力して下さい。以下のようなメッセージが表示され、1) FlashAir の無線アクセスポイントに接続中である場合は元の無線アクセスポイントに再接続、2) 元々接続済みのファイルサーバがある場合はそのファイルサーバに再接続、を行った上でスクリプトを終了します。
 
-  SIGING is received. (ex. Ctrl-C)
+    SIGING is received. (ex. Ctrl-C)
 
-  Please Wait a minute, Now restoring Wifi and NAS ..
+    Please Wait a minute, Now restoring Wifi and NAS ..
 
-  Wifi Setting is being restored ... OK
-    Waiting update of "/etc/resolv.conf" . done.
+    Wifi Setting is being restored ... OK
+      Waiting update of "/etc/resolv.conf" . done.
 
-  Network Drives Re-Mount
-    "/Volumes/share" is being mounted ...  OK
+    Network Drives Re-Mount
+      "/Volumes/share" is being mounted ...  OK
 
 
 アーカイブ後の写真データの編集について
