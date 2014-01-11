@@ -26,6 +26,9 @@ PHOTO_KEYWORD="^wlansd"
 # Sub Directory for Unclassified files
 UNCLASS_DIR="someday"
 
+# Post Script (This is executed after archive)
+POST_SCRIPT=""
+
 ####################
 ## Local Archived Settings (selective)
 
@@ -1403,6 +1406,18 @@ else
     echo "[Update Archived Photos List Cache File]"         >> "$SUMMARY_LOG"
     echo "\"$ARCH_CACHE\" is not updated for some problems" >> "$SUMMARY_LOG"
 
+fi
+
+####################
+## Execute Post Script
+if [ -n "$POST_SCRIPT" ]; then
+    echo ""                      >> "$SUMMARY_LOG"
+    echo "[Execute Post Script]" >> "$SUMMARY_LOG"
+    declare -p POST_SCRIPT       >> "$SUMMARY_LOG"
+
+    echo "  Executing Post Script \"$POST_SCRIPT\" " >&2
+    $POST_SCRIPT
+    echo "" >&2
 fi
 
 ####################
