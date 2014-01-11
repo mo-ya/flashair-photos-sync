@@ -102,9 +102,7 @@ FlashAir Photos Sync
             $ mkdir ~/bin
             $ mv flashair-photos-sync.sh ~/bin/
             $ export PATH=$PATH:~/bin/
-
 4. ExifTool をインストール
-
     - [ExifTool by Phil Harvey](http://www.sno.phy.queensu.ca/~phil/exiftool/) から Mac OS X Package (dmg ファイル) をダウンロード
     - dmg ファイルをダブルクリックしてインストーラを展開
     - インストーラを右クリックし、メニューの [開く] を選択すると [開発元は未確認です。開いてもよろしいですか？] と表示されるため、そこでも [開く] を選択することでインストールウィザードが起動する。あとはインストールウィザードに従ってインストールを実施
@@ -121,7 +119,6 @@ FlashAir Photos Sync
                    exiftool [OPTIONS] -tagsFromFile SRCFILE [-SRCTAG[>DSTTAG]...] FILE...
                    exiftool [ -ver | -list[w|f|r|wf|g[NUM]|d|x] ]
 5. flashair-photos-sync.sh 内の以下の変数をテキストエディタで編集
-
     - 作業ディレクトリ
     
       このディレクトリ以下に一時写真ファイル置き場、アーカイブ済みファイルのキャッシュ、ログが設置されます。
@@ -174,7 +171,6 @@ FlashAir Photos Sync
             NAS_MOUNT_PATH="share"
             NAS_LOCAL_PATH="/Volumes/share"
 6. ディレクトリの作成
-
     - *BASE_DIR*、*ARCH_LOCAL_PATH*、*ARCH_REMOTE_PATH* に指定したディレクトリを事前に作成しておきます。
 7. スクリプト実行前に一度、1) FlashAir の Wifi への接続、2) (アーカイブ先がファイルサーバの場合は) ファイルサーバへの接続、を済ませておいて下さい。このスクリプトはキーチェーンからパスワードを取得する機構になっているため、事前の接続 (= キーチェーンへのパスワード登録) が必要なためです。
 
