@@ -180,61 +180,61 @@ FlashAir Photos Sync
 日常的な利用方法
 ----------
 
-1.  以下のように -f オプションを指定してスクリプトを実行します。
+以下のように -f オプションを指定してスクリプトを実行します。
 
-        $ flashair-photos-sync.sh -f
+    $ flashair-photos-sync.sh -f
 
-    まずキーチェーンから無線アクセスポイント切替、およびファイルサーバマウントのためのパスワードを取得します。*security* によるキーチェーンへのアクセス許可のウィンドウが出る場合があるので [許可] または [常に許可] をクリックして下さい。
+まずキーチェーンから無線アクセスポイント切替、およびファイルサーバマウントのためのパスワードを取得します。*security* によるキーチェーンへのアクセス許可のウィンドウが出る場合があるので [許可] または [常に許可] をクリックして下さい。
 
-        Passwords are fetched from KEYCHAIN
+    Passwords are fetched from KEYCHAIN
 
-        ** Please Authorize "security" program to access to some passwords in KEYCHAIN **
+    ** Please Authorize "security" program to access to some passwords in KEYCHAIN **
 
-          Fetching Wifi Password for [CurWifiSSID] ... OK
-          Fetching Wifi Password for [flashair] ... OK
-          Fetching NAS Password for [smb:user@192.168.1.10/share] ... OK
+      Fetching Wifi Password for [CurWifiSSID] ... OK
+      Fetching Wifi Password for [flashair] ... OK
+      Fetching NAS Password for [smb:user@192.168.1.10/share] ... OK
 
-    その後、接続済みファイルサーバがある場合はその接続を解除した上で、以下のメッセージが表示されます。これが表示されたら FlashAir 搭載のデジカメの電源をオンにして下さい (既に電源が入っていた場合は一度電源をオフにして再度オンにして下さい)。
+その後、接続済みファイルサーバがある場合はその接続を解除した上で、以下のメッセージが表示されます。これが表示されたら FlashAir 搭載のデジカメの電源をオンにして下さい (既に電源が入っていた場合は一度電源をオフにして再度オンにして下さい)。
 
-        ##########################################################
-        ##  Now, Switching Wifi to FlashAir...                  ##
-        ##                                                      ##
-        ##  Please Power ON (or Reboot) FlashAir Device.        ##
-        ##    (Completion of switch to FlashAir takes a time.)  ##
-        ##########################################################
+    ##########################################################
+    ##  Now, Switching Wifi to FlashAir...                  ##
+    ##                                                      ##
+    ##  Please Power ON (or Reboot) FlashAir Device.        ##
+    ##    (Completion of switch to FlashAir takes a time.)  ##
+    ##########################################################
 
-    スクリプトが 20 回ほど 1 秒間隔で FlashAir の無線アクセスポイントへの接続のリトライを行います。手元のテスト環境だと、だいたい 5 - 10 回ほどのリトライで接続されます。
+スクリプトが 20 回ほど 1 秒間隔で FlashAir の無線アクセスポイントへの接続のリトライを行います。手元のテスト環境だと、だいたい 5 - 10 回ほどのリトライで接続されます。
 
-        Following message is returned.
-          [Could not find network flashair.]
-        Retrying (remaining 19 times) ...
-        Following message is returned.
-          [Could not find network flashair.]
-        Retrying (remaining 18 times) ...
+    Following message is returned.
+      [Could not find network flashair.]
+    Retrying (remaining 19 times) ...
+    Following message is returned.
+      [Could not find network flashair.]
+    Retrying (remaining 18 times) ...
 
-    切替に成功すると、1) FlashAir のインデックスファイルから写真データファイルリストの入手、2) アーカイブ済みファイルのキャッシュとの比較、を行い、以下のようにダウンロード対象のファイル数と最初と最後のファイル名を表示します。問題なければ Enter を入力して下さい。
+切替に成功すると、1) FlashAir のインデックスファイルから写真データファイルリストの入手、2) アーカイブ済みファイルのキャッシュとの比較、を行い、以下のようにダウンロード対象のファイル数と最初と最後のファイル名を表示します。問題なければ Enter を入力して下さい。
 
-        [Donwload]
-          Skip    :     1064
-          Download:       60 [P1031083.JPG - PC291082.JPG]
-        OK? [Y/n]:
+    [Donwload]
+      Skip    :     1064
+      Download:       60 [P1031083.JPG - PC291082.JPG]
+    OK? [Y/n]:
 
-    ダウンロードが完了すると、1) 元々接続していた無線アクセスポイントへの接続切替、2) 元々接続していたファイルサーバへの接続、を行った上で、アーカイブ先ディレクトリへアーカイブを行います。アーカイブの前にアーカイブ対象ファイルが一覧されます。問題なければ Enter を入力して下さい。対象ファイルを改めてページャで確認したい場合は *2* を入力し確認して下さい。一覧を less で確認できます。
+ダウンロードが完了すると、1) 元々接続していた無線アクセスポイントへの接続切替、2) 元々接続していたファイルサーバへの接続、を行った上で、アーカイブ先ディレクトリへアーカイブを行います。アーカイブの前にアーカイブ対象ファイルが一覧されます。問題なければ Enter を入力して下さい。対象ファイルを改めてページャで確認したい場合は *2* を入力し確認して下さい。一覧を less で確認できます。
 
-                       :
-        2014/20140103/P1031131.JPG
-        2014/20140103/P1031132.JPG
+                   :
+    2014/20140103/P1031131.JPG
+    2014/20140103/P1031132.JPG
 
-        sent 1392 bytes  received 410 bytes  3604.00 bytes/sec
-        total size is 61817302  speedup is 34304.83
+    sent 1392 bytes  received 410 bytes  3604.00 bytes/sec
+    total size is 61817302  speedup is 34304.83
 
-          Dry run is done. (Destination: "/Users/user/Pictures/FlashAir/")
+      Dry run is done. (Destination: "/Users/user/Pictures/FlashAir/")
 
-          1 (default): Actual Sync is executed
-          2          : Check Again with pager (.ex  rsync -n .. | less )
-          3          : Cancel
+      1 (default): Actual Sync is executed
+      2          : Check Again with pager (.ex  rsync -n .. | less )
+      3          : Cancel
 
-        Please Select [1]:
+    Please Select [1]:
 
 なお、アーカイブをキャンセルした場合、写真データファイルは BASE_DIR 以下の写真データ一時保存ディレクトリに仮保存された状態になります (スクリプト再実行時に FlashAir からのダウンロードを省略できます)。
 
