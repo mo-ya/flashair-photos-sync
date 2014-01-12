@@ -1416,7 +1416,7 @@ if [ -n "$POST_SCRIPT" ]; then
     declare -p POST_SCRIPT       >> "$SUMMARY_LOG"
 
     echo "  Executing Post Script \"$POST_SCRIPT\" " >&2
-    $POST_SCRIPT
+    eval "$POST_SCRIPT"
     echo "" >&2
 fi
 
