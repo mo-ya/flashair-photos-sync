@@ -1168,6 +1168,9 @@ if [ -n "$download_mode" ]; then
                 return_org_dir
 
                 $EXIFTOOL "${CURL_DIR}/$img" 2>/dev/null | grep "^Modify Date" | head -1 | cut -d: -f 2-10 | sed 's/\+.*$//g' > "$DATE_INFO"
+                if [ ! -s "$DATE_INFO" ]; then
+                    $EXIFTOOL "${CURL_DIR}/$img" 2>/dev/null | grep "^Create Date" | head -1 | cut -d: -f 2-10 | sed 's/\+.*$//g' > "$DATE_INFO"
+                fi
                 #$JHEAD "${CURL_DIR}/$img" 2>/dev/null | grep ^Date/Time | cut -d: -f 2-10  > "$DATE_INFO"
 
                 time=$( cat "$DATE_INFO" | sed 's/:\([0-9][0-9]\)$/.\1/' | sed 's/[: ]//g' )
@@ -1235,6 +1238,9 @@ if [ -n "$local_arch_mode" ] || [ -n "$remote_arch_mode" ]; then
     cat "$PHOTO_LIST" | while read file; do
         echo -n "."
         $EXIFTOOL "${PHOTO_DIR}/$file" 2>/dev/null | grep "^Modify Date" | head -1 | cut -d: -f 2-4 | awk '{print $1}' > "$DATE_INFO"
+        if [ ! -s "$DATE_INFO" ]; then
+            $EXIFTOOL "${PHOTO_DIR}/$file" 2>/dev/null | grep "^Create Date" | head -1 | cut -d: -f 2-10 | awk '{print $1}' > "$DATE_INFO"
+        fi
         #$JHEAD "${PHOTO_DIR}/$file" 2>/dev/null | grep ^Date/Time | cut -d: -f 2-4 | awk '{print $1}' > "$DATE_INFO"
         
         year=$( cat "$DATE_INFO" | awk -F: '{print $1}' )
