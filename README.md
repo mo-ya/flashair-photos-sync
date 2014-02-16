@@ -9,6 +9,7 @@ FlashAir Photos Sync
 目次
 ----------
 
+- [動作の概要](#動作の概要)
 - [動作の詳細](#動作の詳細)
 - [メリット](#メリット)
 - [動作テスト環境](#動作テスト環境)
@@ -18,6 +19,13 @@ FlashAir Photos Sync
 - [強制終了時のふるまい](#強制終了時のふるまい)
 - [アーカイブ後の写真データの編集について](#アーカイブ後の写真データの編集について)
 - [既知の問題点](#既知の問題点)
+
+動作の概要
+----------
+
+[FlashAir](https://www.flashair-developers.com/ja/about/overview/) 上の写真を手元の Macintosh に一括ダウンロード (ただし既にダウンロード済のものはスキップ) し、それらを撮影日ごとに日付ディレクトリにアーカイブします。撮影日情報は [ExifTool](http://www.sno.phy.queensu.ca/~phil/exiftool/) で画像や動画ファイルの Exif ヘッダから取得します。
+
+![flashair-photos-sync Overview Image](./blob/master/flashair-photos-sync-overview.png "flashair-photos-sync Overview Image")
 
 動作の詳細
 ----------
