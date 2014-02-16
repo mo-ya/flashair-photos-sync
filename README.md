@@ -25,7 +25,7 @@ FlashAir Photos Sync
 
 [FlashAir](https://www.flashair-developers.com/ja/about/overview/) 上の写真を手元の Macintosh に一括ダウンロード (ただし既にダウンロード済のものはスキップ) し、それらを撮影日ごとに日付ディレクトリにアーカイブします。撮影日情報は [ExifTool](http://www.sno.phy.queensu.ca/~phil/exiftool/) で画像や動画ファイルの Exif ヘッダから取得します。
 
-![flashair-photos-sync Overview Image](./blob/master/flashair-photos-sync-overview.png "flashair-photos-sync Overview Image")
+![flashair-photos-sync Overview Image](flashair-photos-sync-overview.png "flashair-photos-sync Overview Image")
 
 動作の詳細
 ----------
