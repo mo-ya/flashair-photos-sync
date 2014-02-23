@@ -54,6 +54,9 @@ NAS_LOCAL_PATH="/Volumes/share"
 ## Internal Settings (Do not modified)
 ########################################
 
+# Mac OS X Version Check Command
+MACOSX_VER=$( sw_vers -productVersion )
+
 # exiftool Command Name (exiftool displays shooting date and time of various files)
 EXIFTOOL=exiftool
 
@@ -63,13 +66,15 @@ LOG_DIR="${BASE_DIR}/logs"
 # Archived Photos List Cache File
 ARCH_CACHE="${BASE_DIR}/flashair-photos-sync-archived.cache"
 
-SCRIPT_NAME=$(basename $0 .sh)
+SCRIPT_NAME=$( basename $0 .sh )
 
 DATE=$( date +%Y%m%d-%H%M%S )
 
 SUMMARY_LOG="${LOG_DIR}/${SCRIPT_NAME}-summary.log.${DATE}"
 
-WLAN_PREFIX="com.apple.network.wlan.ssid."
+WLAN_SVCE_PREFIX="com.apple.network.wlan.ssid."
+
+WLAN_SVCE_NAME="AirPort"
 
 RESOLV_CONF="/etc/resolv.conf"
 
@@ -314,6 +319,32 @@ wait_resolvconf_update(){
         sleep 1
     done
     echo " done."  >&2
+}
+
+version_serialize(){
+    ver_str=$( echo $1 | tr -d '[A-Za-z\-]' )
+    ver_serial=0
+
+    IFS_ORIGINAL="$IFS"
+    IFS=.
+    ver_ary=($ver_str)
+    IFS="$IFS_ORIGINAL"
+
+    factor=1000
+    for v in "${ver_ary[@]}"; do
+        ver_serial=$( echo "scale=24; $ver_serial + $v * $factor" | bc )
+        factor=$( echo "scale=24; $factor / 1000" | bc )
+    done
+
+    echo $ver_serial
+}
+
+ver_largerequal(){
+    target_ver=$( version_serialize $1 )
+    base_ver=$( version_serialize $2 )
+
+    stat=$( echo "$target_ver >= $base_ver" | bc )
+    return $stat
 }
 
 sigint_trap(){
@@ -782,8 +813,15 @@ if [ -n "$download_mode" ]; then
         echo -n "    [$org_wifi_ssid] "                                >> "$SUMMARY_LOG"
         echo -n "    Fetching Wifi Password for [$org_wifi_ssid] ... " >&2
 
-        keychain_item=$( security find-generic-password -gs ${WLAN_PREFIX}${org_wifi_ssid} 2>&1 1>/dev/null )
-        
+        ver_largerequal "$MACOSX_VER" "10.9"
+        if [ $? -eq 1 ]; then
+            wifi_pwd_fetch_opt="find-generic-password -g -s ${WLAN_SVCE_NAME} -a ${org_wifi_ssid}"
+        else
+            wifi_pwd_fetch_opt="find-generic-password -g -s ${WLAN_SVCE_PREFIX}${org_wifi_ssid}"
+        fi
+
+        keychain_item=$( echo $wifi_pwd_fetch_opt | xargs security 2>&1 1>/dev/null )
+
         if [ $? -ne 0 ]; then
             echo "Failed"  >> "$SUMMARY_LOG"
             echo "ERROR: Passwords can not be fetched from KEYCHAIN" >> "$SUMMARY_LOG"
@@ -817,7 +855,14 @@ if [ -n "$download_mode" ]; then
     echo -n "    [$FLAIR_SSID] "                                >> "$SUMMARY_LOG"
     echo -n "    Fetching Wifi Password for [$FLAIR_SSID] ... " >&2
 
-    keychain_item=$( security find-generic-password -gs ${WLAN_PREFIX}${FLAIR_SSID} 2>&1 1>/dev/null )
+    ver_largerequal "$MACOSX_VER" "10.9"
+    if [ $? -eq 1 ]; then
+        wifi_pwd_fetch_opt="find-generic-password -g -s ${WLAN_SVCE_NAME} -a ${FLAIR_SSID}"
+    else
+        wifi_pwd_fetch_opt="find-generic-password -g -s ${WLAN_SVCE_PREFIX}${FLAIR_SSID}"
+    fi
+
+    keychain_item=$( echo $wifi_pwd_fetch_opt | xargs security 2>&1 1>/dev/null )
 
     if [ $? -ne 0 ]; then
         echo "Failed"  >> "$SUMMARY_LOG"
