@@ -81,8 +81,12 @@ FlashAir Photos Sync
 
 - PC
     - ハードウェア: **MacBook Air**
-    - OS: **Mac OS X 10.8.5 (Mountain Lion)**
-    - シェル: **GNU bash, version 3.2.48(1)-release (x86_64-apple-darwin12)**
+    - OS: 
+        - **Mac OS X 10.9.1 (Mavericks)**
+        - **Mac OS X 10.8.5 (Mountain Lion)** (〜 v1.0)
+    - シェル: 
+        - **GNU bash, version 3.2.51(1)-release (x86_64-apple-darwin13)**
+        - **GNU bash, version 3.2.48(1)-release (x86_64-apple-darwin12)** (〜 v1.0)
     - 外部ツール
         - **[ExifTool version 9.45](http://www.sno.phy.queensu.ca/~phil/exiftool/)**
 
@@ -137,9 +141,9 @@ FlashAir Photos Sync
       FlashAir に接続する無線デバイス名 (en0 や en1 など) を設定します。複数のネットワークデバイスが接続されている場合は `/sbin/ifconfig` コマンドで確認して下さい。
 
             NW_DEV="en0"
-    - FlashAir Wifi SSID 名
+    - FlashAir Wi-Fi SSID 名
 
-      FlashAir に設定している、Wifi SSID 名を設定して下さい。
+      FlashAir に設定している、Wi-Fi SSID 名を設定して下さい。
 
             FLAIR_SSID="flashair"
     - FlashAir のホスト名、アクセス先 URL、写真データファイルの一覧取得時のキーワード
@@ -180,8 +184,10 @@ FlashAir Photos Sync
             NAS_LOCAL_PATH="/Volumes/share"
 6. ディレクトリの作成
     - **BASE_DIR**、**ARCH_LOCAL_PATH**、**ARCH_REMOTE_PATH** に指定したディレクトリを事前に作成しておきます。
-7. スクリプト実行前に一度、1) FlashAir の Wifi への接続、2) (アーカイブ先がファイルサーバの場合は) ファイルサーバへの接続、を済ませておいて下さい。このスクリプトはキーチェーンからパスワードを取得する機構になっているため、事前の接続 (= キーチェーンへのパスワード登録) が必要なためです。
+7. スクリプト実行前に一度、1) FlashAir の Wi-Fi への接続、2) (アーカイブ先がファイルサーバの場合は) ファイルサーバへの接続、を済ませておいて下さい。このスクリプトはキーチェーンからパスワードを取得する機構になっているため、事前の接続 (= キーチェーンへのパスワード登録) が必要なためです。
+8. (Mavericks の場合) アプリケーションフォルダのユーティリティフォルダ内の **キーチェーンアクセス** でキーチェーンの管理ユーティリティを呼び出し、Wi-Fi パスワードとファイルサーバのパスワードが **ログイン** のキーチェーンに入っていることを確認して下さい。もしもそれ以外のキーチェーンに保存している場合、該当のパスワードを選択して Ctrl-C でコピーし、キーチェーンを **ログイン** に切り替えてから Ctrl-V でペーストして下さい。その際、ペーストする項目数だけキーチェーンアクセス認証用にパスワード入力が求められる場合があります。これは [security(1)](https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/security.1.html) コマンドでアクセス可能なキーチェーンの制限によるもので、今後不要になる可能性があります。
 
+   ![Keychain Items](keychain-items.png "Keychain Items")
 
 以上で準備完了です。
 
@@ -198,14 +204,14 @@ FlashAir Photos Sync
 
     ** Please Authorize "security" program to access to some passwords in KEYCHAIN **
 
-      Fetching Wifi Password for [CurWifiSSID] ... OK
-      Fetching Wifi Password for [flashair] ... OK
+      Fetching Wi-Fi Password for [CurWifiSSID] ... OK
+      Fetching Wi-Fi Password for [flashair] ... OK
       Fetching NAS Password for [smb:user@192.168.1.10/share] ... OK
 
 その後、接続済みファイルサーバがある場合はその接続を解除した上で、以下のメッセージが表示されます。これが表示されたら FlashAir 搭載のデジカメの電源をオンにして下さい (既に電源が入っていた場合は一度電源をオフにして再度オンにして下さい)。
 
     ##########################################################
-    ##  Now, Switching Wifi to FlashAir...                  ##
+    ##  Now, Switching Wi-Fi to FlashAir...                  ##
     ##                                                      ##
     ##  Please Power ON (or Reboot) FlashAir Device.        ##
     ##    (Completion of switch to FlashAir takes a time.)  ##
@@ -280,9 +286,9 @@ FlashAir からの画像ダウンロードなど、スクリプトによる処�
 
     SIGING is received. (ex. Ctrl-C)
 
-    Please Wait a minute, Now restoring Wifi and NAS ..
+    Please Wait a minute, Now restoring Wi-Fi and NAS ..
 
-    Wifi Setting is being restored ... OK
+    Wi-Fi Setting is being restored ... OK
       Waiting update of "/etc/resolv.conf" . done.
 
     Network Drives Re-Mount
