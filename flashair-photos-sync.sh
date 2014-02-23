@@ -11,11 +11,11 @@
 # Working Base Directory
 BASE_DIR="${HOME}/Pictures/FlashAir"
 
-# Network Device for Wifi (for connection to FlashAir Wifi)
+# Network Device for Wi-Fi (for connection to FlashAir Wi-Fi)
 NW_DEV="en0"
 #NW_DEV="en1"
 
-# FlashAir Wifi SSID
+# FlashAir Wi-Fi SSID
 FLAIR_SSID="flashair"
 
 # FlashAir Index URL & Photos indexes keyword
@@ -173,21 +173,21 @@ photos_cleaning(){
 restore_wifi(){
 
     ####################
-    ## Wifi is restored to original setting
+    ## Wi-Fi is restored to original setting
 
     cur_wifi_ssid=$( networksetup -getairportnetwork ${NW_DEV} | awk '{print $NF}' )
     
     if [ ! "$cur_wifi_ssid" == "$org_wifi_ssid" ]; then
     
         if [ -n "${org_wifi_is_not_found}" ]; then
-            echo ""                               >> "$SUMMARY_LOG"
-            echo "[Wifi Setting is not Restored]" >> "$SUMMARY_LOG"
+            echo ""                                >> "$SUMMARY_LOG"
+            echo "[Wi-Fi Setting is not Restored]" >> "$SUMMARY_LOG"
             
         else
-            echo ""                               >> "$SUMMARY_LOG"
-            echo -n "[Wifi Setting is Restored] " >> "$SUMMARY_LOG"
+            echo ""                                >> "$SUMMARY_LOG"
+            echo -n "[Wi-Fi Setting is Restored] " >> "$SUMMARY_LOG"
             echo "  " >&2
-            echo -n "  Wifi Setting is being restored ... " >&2
+            echo -n "  Wi-Fi Setting is being restored ... " >&2
             
             echo ${org_wifi_back_cmd[1]} | xargs ${org_wifi_back_cmd[0]}
             
@@ -351,7 +351,7 @@ sigint_trap(){
     echo "" >&2
     echo "  SIGING is received. (ex. Ctrl-C) " >&2
     echo "" >&2
-    echo "  Please Wait a minute, Now restoring Wifi and NAS .. " >&2
+    echo "  Please Wait a minute, Now restoring Wi-Fi and NAS .. " >&2
     return_org_dir
     restore_wifi
     restore_nas
@@ -778,11 +778,11 @@ if [ -n "$download_mode" ]; then
 fi
 
 
-## Wifi (already connected)
+## Wi-Fi (already connected)
 
 if [ -n "$download_mode" ]; then
 
-    echo "  [Wifi (already connected)]"  >> "$SUMMARY_LOG"
+    echo "  [Wi-Fi (already connected)]"  >> "$SUMMARY_LOG"
     org_wifi_info=$( networksetup -getairportnetwork ${NW_DEV} )
 
     if [ $? -ne 0 ]; then
@@ -803,15 +803,15 @@ if [ -n "$download_mode" ]; then
     org_wifi_is_not_found=$( echo $org_wifi_info | grep "not associated" )
     
     if [ -n "${org_wifi_is_not_found}" ]; then
-        echo "    Now not associated any Wifi Network "     >> "$SUMMARY_LOG"
+        echo "    Now not associated any Wi-Fi Network "     >> "$SUMMARY_LOG"
         
     else
         org_wifi_ssid=$( echo $org_wifi_info | awk '{print $NF}' )
     
         #declare -p org_wifi_ssid
         
-        echo -n "    [$org_wifi_ssid] "                                >> "$SUMMARY_LOG"
-        echo -n "    Fetching Wifi Password for [$org_wifi_ssid] ... " >&2
+        echo -n "    [$org_wifi_ssid] "                                 >> "$SUMMARY_LOG"
+        echo -n "    Fetching Wi-Fi Password for [$org_wifi_ssid] ... " >&2
 
         ver_largerequal "$MACOSX_VER" "10.9"
         if [ $? -eq 1 ]; then
@@ -827,7 +827,7 @@ if [ -n "$download_mode" ]; then
             echo "ERROR: Passwords can not be fetched from KEYCHAIN" >> "$SUMMARY_LOG"
         
             echo ""
-            echo "  ERROR: Passwords about Current Wifi \"${org_wifi_ssid}\""
+            echo "  ERROR: Passwords about Current Wi-Fi \"${org_wifi_ssid}\""
             echo "         can not be fetched from KEYCHAIN"
             echo ""
         
@@ -846,14 +846,14 @@ if [ -n "$download_mode" ]; then
     fi
 fi
 
-## Wifi (FlashAir)
+## Wi-Fi (FlashAir)
 
 if [ -n "$download_mode" ]; then
 
-    echo "  [Wifi (FlashAir)]"  >> "$SUMMARY_LOG"
+    echo "  [Wi-Fi (FlashAir)]"  >> "$SUMMARY_LOG"
 
-    echo -n "    [$FLAIR_SSID] "                                >> "$SUMMARY_LOG"
-    echo -n "    Fetching Wifi Password for [$FLAIR_SSID] ... " >&2
+    echo -n "    [$FLAIR_SSID] "                                 >> "$SUMMARY_LOG"
+    echo -n "    Fetching Wi-Fi Password for [$FLAIR_SSID] ... " >&2
 
     ver_largerequal "$MACOSX_VER" "10.9"
     if [ $? -eq 1 ]; then
@@ -869,7 +869,7 @@ if [ -n "$download_mode" ]; then
         echo "ERROR: Passwords can not be fetched from KEYCHAIN" >> "$SUMMARY_LOG"
         
         echo ""
-        echo "  ERROR: Passwords about Current Wifi \"${FLAIR_SSID}\""
+        echo "  ERROR: Passwords about Current Wi-Fi \"${FLAIR_SSID}\""
         echo "         can not be fetched from KEYCHAIN"
         echo ""
         
@@ -978,10 +978,10 @@ if [ -n "$download_mode" ]; then
             
             if [ $? -ne 0 ]; then
                 echo "Failed"  >> "$SUMMARY_LOG"
-                echo "ERROR: Umount of Network Drives before switching Wifi is failed " >> "$SUMMARY_LOG"
+                echo "ERROR: Umount of Network Drives before switching Wi-Fi is failed " >> "$SUMMARY_LOG"
                 
                 echo ""
-                echo "  ERROR: Umount of \"$lpath\" before switching Wifi is failed"
+                echo "  ERROR: Umount of \"$lpath\" before switching Wi-Fi is failed"
                 echo ""
                 
                 clean_and_compress
@@ -996,15 +996,15 @@ if [ -n "$download_mode" ]; then
 fi
     
 ####################
-## Switch Wifi to FlashAir
+## Switch Wi-Fi to FlashAir
 
 if [ -n "$download_mode" ]; then
 
-    echo ""                               >> "$SUMMARY_LOG"
-    echo -n "[Switch Wifi to FlashAir] "  >> "$SUMMARY_LOG"
+    echo ""                                >> "$SUMMARY_LOG"
+    echo -n "[Switch Wi-Fi to FlashAir] "  >> "$SUMMARY_LOG"
     echo ""  >&2
     echo "  ##########################################################" >&2
-    echo "  ##  Now, Switching Wifi to FlashAir...                  ##" >&2
+    echo "  ##  Now, Switching Wi-Fi to FlashAir...                 ##" >&2
     echo "  ##                                                      ##" >&2
     echo "  ##  Please Power ON (or Reboot) FlashAir Device.        ##" >&2
     echo "  ##    (Completion of switch to FlashAir takes a time.)  ##" >&2
@@ -1029,10 +1029,10 @@ if [ -n "$download_mode" ]; then
         
         if [ $wifi_swt_cnt -le 0 ]; then
             echo "Failed"  >> "$SUMMARY_LOG"
-            echo "ERROR: Switching to FlashAir Wifi \"$FLAIR_SSID\" is failed " >> "$SUMMARY_LOG"
+            echo "ERROR: Switching to FlashAir Wi-Fi \"$FLAIR_SSID\" is failed " >> "$SUMMARY_LOG"
             
             echo ""
-            echo "  ERROR: Switching to FlashAir Wifi \"$FLAIR_SSID\" is failed"
+            echo "  ERROR: Switching to FlashAir Wi-Fi \"$FLAIR_SSID\" is failed"
             echo ""
 
             restore_nas
@@ -1255,7 +1255,7 @@ if [ -n "$download_mode" ]; then
 fi
 
 ####################
-## Restore Wifi and NAS
+## Restore Wi-Fi and NAS
 if [ -n "$download_mode" ]; then
 
     restore_wifi
