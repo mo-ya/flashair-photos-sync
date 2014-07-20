@@ -100,7 +100,7 @@ FlashAir Photos Sync
 1. GitHub からスクリプトを入手
     - 例1:
 
-            $ curl -O https://raw.github.com/mo-ya/flashair-photos-sync/master/flashair-photos-sync.sh
+            $ curl -L -O https://raw.github.com/mo-ya/flashair-photos-sync/master/flashair-photos-sync.sh
     - 例2:
 
             $ git clone git://github.com/mo-ya/flashair-photos-sync.git
