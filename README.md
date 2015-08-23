@@ -82,6 +82,7 @@ FlashAir Photos Sync
 - PC
     - ハードウェア: **MacBook Air**
     - OS: 
+        - **Mac OS X 10.10.5 (Yosemite)**
         - **Mac OS X 10.9.1 (Mavericks)**
         - **Mac OS X 10.8.5 (Mountain Lion)** (〜 v1.0)
     - シェル: 
