@@ -82,14 +82,16 @@ FlashAir Photos Sync
 - PC
     - ハードウェア: **MacBook Air**
     - OS: 
+        - **Mac OS X 10.11.3 (El Capitan)**
         - **Mac OS X 10.10.5 (Yosemite)**
         - **Mac OS X 10.9.1 (Mavericks)**
         - **Mac OS X 10.8.5 (Mountain Lion)** (〜 v1.0)
     - シェル: 
+        - **GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin15)**
         - **GNU bash, version 3.2.51(1)-release (x86_64-apple-darwin13)**
         - **GNU bash, version 3.2.48(1)-release (x86_64-apple-darwin12)** (〜 v1.0)
     - 外部ツール
-        - **[ExifTool version 9.45](http://www.sno.phy.queensu.ca/~phil/exiftool/)**
+        - **[ExifTool version 10.08](http://owl.phy.queensu.ca/~phil/exiftool/)**
 
 - 写真・動画データ形式
     - JPEG
