@@ -1,6 +1,6 @@
 #!/bin/bash
 ##
-## Copyright (C) 2014 Y.Morikawa <http://moya-notes.blogspot.jp/>
+## Copyright (C) 2016 Y.Morikawa <http://moya-notes.blogspot.jp/>
 ##
 ## License: MIT License  (See LICENSE.md)
 ##
@@ -1120,6 +1120,9 @@ if [ -n "$download_mode" ]; then
     echo -n "  FlashAir Photo Listing ... " >&2
     cat "$photo_index" | while read line; do
         img=$( echo $line | grep $PHOTO_KEYWORD | awk -F, '{print $2}' )
+        if [[ $img == *:* ]]; then
+           img=$( echo $img | awk -F: '{print $2}' | sed 's/"//g' )
+        fi
         if [ -n "$img" ]; then
             echo "$img" >> "$FLAIR_LIST_RAW"
         fi

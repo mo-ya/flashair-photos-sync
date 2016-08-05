@@ -77,12 +77,13 @@ FlashAir Photos Sync
 ----------
 
 - FlashAir
+    - **TOSHIBA SD-WE008G**
     - **TOSHIBA SD-WB008G**
 
 - PC
     - ハードウェア: **MacBook Air**
     - OS: 
-        - **Mac OS X 10.11.3 (El Capitan)**
+        - **Mac OS X 10.11.6 (El Capitan)**
         - **Mac OS X 10.10.5 (Yosemite)**
         - **Mac OS X 10.9.1 (Mavericks)**
         - **Mac OS X 10.8.5 (Mountain Lion)** (〜 v1.0)
