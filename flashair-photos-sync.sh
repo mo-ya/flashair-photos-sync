@@ -1,15 +1,12 @@
 #!/bin/bash
 ##
-## Copyright (C) 2016 Y.Morikawa <http://moya-notes.blogspot.jp/>
+## Copyright (C) 2017 Y.Morikawa <http://moya-notes.blogspot.jp/>
 ##
 ## License: MIT License  (See LICENSE.md)
 ##
 ########################################
 ## Settings
 ########################################
-
-# Working Base Directory
-BASE_DIR="${HOME}/Pictures/FlashAir"
 
 # Network Device for Wi-Fi (for connection to FlashAir Wi-Fi)
 NW_DEV="en0"
@@ -23,6 +20,15 @@ FLAIR_HOST="flashair"
 FLAIR_URL="http://${FLAIR_HOST}/DCIM/101OLYMP"
 PHOTO_KEYWORD="^wlansd"
 
+# Working Base Directory
+BASE_DIR="${HOME}/Pictures/FlashAir"
+
+# Directory for Logs
+LOG_DIR="${BASE_DIR}/logs"
+
+# Archived Photos List Cache File
+ARCH_CACHE="${BASE_DIR}/flashair-photos-sync-archived.cache"
+
 # Sub Directory for Unclassified files
 UNCLASS_DIR="someday"
 
@@ -34,7 +40,7 @@ POST_SCRIPT=""
 
 # Local Directory Path for Photos Archived
 #   (If the value is blank, local archive is not performed)
-ARCH_LOCAL_PATH=""
+ARCH_LOCAL_PATH="${HOME}/Pictures/FlashAir"
 
 ####################
 ## Remote Archived Settings (selective)
@@ -59,12 +65,6 @@ MACOSX_VER=$( sw_vers -productVersion )
 
 # exiftool Command Name (exiftool displays shooting date and time of various files)
 EXIFTOOL=exiftool
-
-# Directory for Logs
-LOG_DIR="${BASE_DIR}/logs"
-
-# Archived Photos List Cache File
-ARCH_CACHE="${BASE_DIR}/flashair-photos-sync-archived.cache"
 
 SCRIPT_NAME=$( basename $0 .sh )
 
